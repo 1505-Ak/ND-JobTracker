@@ -1,32 +1,19 @@
-const Logo = () => (
-  <svg
-    width="200"
-    height="60"
-    viewBox="0 0 200 60"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-label="Employed logo"
-    className="select-none"
-  >
-    <defs>
-      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#ec4899" />
-        <stop offset="50%" stopColor="#ef4444" />
-        <stop offset="100%" stopColor="#f59e0b" />
-      </linearGradient>
-    </defs>
-    <text
-      x="0"
-      y="45"
-      fontFamily="'Poppins', sans-serif"
-      fontWeight="800"
-      fontSize="42"
-      letterSpacing="1px"
-      fill="url(#grad)"
-    >
-      Employed
-    </text>
-  </svg>
+import React from 'react';
+import logoImg from '../../4EEBFF23-9B09-4D9B-A505-7ACE647A89B0.jpeg';
+
+interface LogoProps {
+  /**
+   * Additional Tailwind classes to apply.
+   */
+  className?: string;
+}
+
+const Logo: React.FC<LogoProps> = ({ className = '' }) => (
+  <img
+    src={logoImg}
+    alt="Employed logo"
+    className={`h-16 sm:h-18 md:h-20 lg:h-24 w-auto select-none rounded-md shadow-md ${className}`}
+  />
 );
 
 export default Logo; 
