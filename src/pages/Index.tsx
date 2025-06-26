@@ -165,9 +165,9 @@ const Index = () => {
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <Logo />
-            <p className="text-lg text-gray-600 max-w-2xl">
+            <p className="text-lg text-gray-600 max-w-2xl sm:mt-0">
               Track your applications with kindness and clarity. Every step forward is progress worth celebrating!
               🌟
             </p>
