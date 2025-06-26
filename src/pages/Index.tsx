@@ -18,6 +18,7 @@ import { ApplicationCalendar } from '@/components/ApplicationCalendar';
 import { AccessibilityPanel } from '@/components/AccessibilityPanel';
 import { JobOpenings } from '@/components/JobOpenings';
 import { useToast } from '@/hooks/use-toast';
+import Logo from '@/components/Logo';
 
 export interface JobApplication {
   id: string;
@@ -165,9 +166,7 @@ const Index = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold mb-2 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-transparent bg-clip-text select-none">
-              Employed
-            </h1>
+            <Logo />
             <p className="text-lg text-gray-600 max-w-2xl">
               Track your applications with kindness and clarity. Every step forward is progress worth celebrating!
               🌟
