@@ -1,69 +1,43 @@
-# React + TypeScript + Vite
+# Neurodivergent-Friendly Job Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A kindness-first web app to help neurodivergent job-seekers plan, track and celebrate their job-search journey.
 
-Currently, two official plugins are available:
+## ✨ Core features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+• Accessible UI – high-contrast & dyslexia-friendly modes
+• Application list with priority colours and inline status editing
+• Calendar view for deadlines and interview dates
+• Remote job-search modal powered by Remotive, JSearch and LinkedIn APIs  
+  – keyword/company/location search  
+  – extra client-side filters (country, company, min. years experience)  
+  – one-click "Track ➕" creates a "To Apply" record
 
-## Expanding the ESLint configuration
+## 🚀 Quick-start
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# 1. Install deps
+npm i        # or pnpm i / yarn
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# 2. Add RapidAPI key (optional but recommended for JSearch/LinkedIn)
+cp .env.example .env   # then paste your key
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. Run dev server
+npm run dev            # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔧 Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command          | Purpose                        |
+|------------------|--------------------------------|
+| `npm run dev`    | Vite dev server (HMR)          |
+| `npm run build`  | Production build               |
+| `npm run preview`| Preview built site             |
+| `npm run lint`   | ESLint                         |
+| `npm run format` | Prettier                       |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Tech stack
+
+React + TypeScript • Vite • Tailwind CSS • Lucide Icons
+
+## 📝 License
+MIT
