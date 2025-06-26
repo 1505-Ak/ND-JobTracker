@@ -2,11 +2,17 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 export const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('bg-white rounded-lg border border-gray-200', className)} {...props} />
+  <div
+    className={cn(
+      'bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700',
+      className,
+    )}
+    {...props}
+  />
 );
 
 export const CardHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('p-4 border-b border-gray-200', className)} {...props} />
+  <div className={cn('p-4 border-b border-gray-200 dark:border-gray-700', className)} {...props} />
 );
 
 export const CardContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

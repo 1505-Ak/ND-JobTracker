@@ -39,6 +39,8 @@ const Index = () => {
   const [showOpenings, setShowOpenings] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [dyslexiaMode, setDyslexiaMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [largeText, setLargeText] = useState(false);
 
   // utilities state
   const [search, setSearch] = useState('');
@@ -51,8 +53,12 @@ const Index = () => {
   useEffect(() => {
     const savedContrast = localStorage.getItem('highContrast') === 'true';
     const savedDyslexia = localStorage.getItem('dyslexiaMode') === 'true';
+    const savedDark = localStorage.getItem('darkMode') === 'true';
+    const savedLarge = localStorage.getItem('largeText') === 'true';
     setHighContrast(savedContrast);
     setDyslexiaMode(savedDyslexia);
+    setDarkMode(savedDark);
+    setLargeText(savedLarge);
   }, []);
 
   // Apply accessibility classes to body
@@ -60,7 +66,9 @@ const Index = () => {
     document.body.className = '';
     if (highContrast) document.body.classList.add('high-contrast');
     if (dyslexiaMode) document.body.classList.add('dyslexia-friendly');
-  }, [highContrast, dyslexiaMode]);
+    if (darkMode) document.body.classList.add('dark');
+    if (largeText) document.body.classList.add('large-text');
+  }, [highContrast, dyslexiaMode, darkMode, largeText]);
 
   // gentle deadline reminder
   useEffect(() => {
@@ -152,12 +160,14 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 p-4 sm:p-6 transition-colors">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Your Job Journey</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              NeuroJob Navigator
+            </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
               Track your applications with kindness and clarity. Every step forward is progress worth celebrating!
               🌟
@@ -254,8 +264,12 @@ const Index = () => {
           <AccessibilityPanel
             highContrast={highContrast}
             dyslexiaMode={dyslexiaMode}
+            darkMode={darkMode}
+            largeText={largeText}
             onHighContrastChange={setHighContrast}
             onDyslexiaModeChange={setDyslexiaMode}
+            onDarkModeChange={setDarkMode}
+            onLargeTextChange={setLargeText}
             onClose={() => setShowSettings(false)}
           />
         )}

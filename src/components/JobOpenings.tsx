@@ -26,7 +26,7 @@ export const JobOpenings = ({ onAdd, onClose }: JobOpeningsProps) => {
   const [locationSearch, setLocationSearch] = useState('');
   const [jobs, setJobs] = useState<RemoteJob[]>([]);
   const [loading, setLoading] = useState(false);
-  const [provider, setProvider] = useState<'remotive' | 'jsearch' | 'linkedin'>('remotive');
+  const [provider, setProvider] = useState<'remotive' | 'jsearch' | 'linkedin' | 'remotejobs'>('remotive');
 
   // filter state
   const [countryFilter, setCountryFilter] = useState('');
@@ -122,6 +122,30 @@ export const JobOpenings = ({ onAdd, onClose }: JobOpeningsProps) => {
           url: j.link || j.job_url,
           candidate_required_location: locationSearch || 'N/A',
           publication_date: j.posted_time_friendly || new Date().toISOString(),
+          description: j.description || '',
+        }));
+        setJobs(mapped);
+      } else if (provider === 'remotejobs') {
+        const params = new URLSearchParams();
+        params.append('offset', '0');
+        if (locationSearch.trim()) params.append('country', locationSearch.trim().toLowerCase());
+        if (keyword.trim()) params.append('search', keyword.trim());
+        params.append('employmentType', 'fulltime');
+
+        const res = await fetch(`https://remote-jobs1.p.rapidapi.com/jobs?${params.toString()}`, {
+          headers: {
+            'x-rapidapi-host': 'remote-jobs1.p.rapidapi.com',
+            'x-rapidapi-key': import.meta.env.VITE_RAPIDAPI_KEY || '',
+          },
+        });
+        const data = await res.json();
+        const mapped: RemoteJob[] = (data || []).map((j: any) => ({
+          id: j.id,
+          title: j.title,
+          company_name: j.company?.name || 'Unknown',
+          url: j.url,
+          candidate_required_location: (j.countries && j.countries.join(',')) || 'remote',
+          publication_date: j.datePosted || new Date().toISOString(),
           description: j.description || '',
         }));
         setJobs(mapped);
@@ -225,6 +249,16 @@ export const JobOpenings = ({ onAdd, onClose }: JobOpeningsProps) => {
                   onChange={() => setProvider('linkedin')}
                 />
                 LinkedIn Jobs
+              </label>
+              <label className="flex items-center gap-1">
+                <input
+                  type="radio"
+                  name="provider"
+                  value="remotejobs"
+                  checked={provider === 'remotejobs'}
+                  onChange={() => setProvider('remotejobs')}
+                />
+                Remote Jobs API
               </label>
               <Button
                 type="button"

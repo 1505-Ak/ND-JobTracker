@@ -1,4 +1,4 @@
-import { X, Eye, Type, Contrast, Volume2, Keyboard } from 'lucide-react';
+import { X, Eye, Type, Contrast, Volume2, Keyboard, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -7,16 +7,24 @@ import { Label } from '@/components/ui/label';
 interface AccessibilityPanelProps {
   highContrast: boolean;
   dyslexiaMode: boolean;
+  darkMode: boolean;
+  largeText: boolean;
   onHighContrastChange: (value: boolean) => void;
   onDyslexiaModeChange: (value: boolean) => void;
+  onDarkModeChange: (value: boolean) => void;
+  onLargeTextChange: (value: boolean) => void;
   onClose: () => void;
 }
 
 export const AccessibilityPanel = ({
   highContrast,
   dyslexiaMode,
+  darkMode,
+  largeText,
   onHighContrastChange,
   onDyslexiaModeChange,
+  onDarkModeChange,
+  onLargeTextChange,
   onClose,
 }: AccessibilityPanelProps) => {
   const handleHighContrastChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +37,18 @@ export const AccessibilityPanel = ({
     const value = e.target.checked;
     onDyslexiaModeChange(value);
     localStorage.setItem('dyslexiaMode', value.toString());
+  };
+
+  const handleDarkModeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.checked;
+    onDarkModeChange(value);
+    localStorage.setItem('darkMode', value.toString());
+  };
+
+  const handleLargeTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.checked;
+    onLargeTextChange(value);
+    localStorage.setItem('largeText', value.toString());
   };
 
   return (
@@ -85,6 +105,34 @@ export const AccessibilityPanel = ({
             </div>
           </div>
           <Switch id="dyslexia-mode" checked={dyslexiaMode} onChange={handleDyslexiaModeChange} />
+        </div>
+
+        {/* Dark Mode */}
+        <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
+          <div className="flex items-start gap-3">
+            <Sun className="h-5 w-5 text-gray-600 mt-0.5" />
+            <div>
+              <Label htmlFor="dark-mode" className="text-sm font-medium text-gray-900">
+                Dark Mode
+              </Label>
+              <p className="text-xs text-gray-600 mt-1">Switches interface to a dark theme</p>
+            </div>
+          </div>
+          <Switch id="dark-mode" checked={darkMode} onChange={handleDarkModeChange} />
+        </div>
+
+        {/* Large Text */}
+        <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
+          <div className="flex items-start gap-3">
+            <Type className="h-5 w-5 text-gray-600 mt-0.5" />
+            <div>
+              <Label htmlFor="large-text" className="text-sm font-medium text-gray-900">
+                Large Text
+              </Label>
+              <p className="text-xs text-gray-600 mt-1">Increases base font size for easier reading</p>
+            </div>
+          </div>
+          <Switch id="large-text" checked={largeText} onChange={handleLargeTextChange} />
         </div>
 
         {/* Keyboard Navigation Info */}

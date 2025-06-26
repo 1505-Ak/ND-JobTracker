@@ -212,3 +212,12 @@ select:invalid:focus {
 .skip-link {
   @apply absolute top-0 left-0 bg-blue-600 text-white px-4 py-2 rounded-br transform -translate-y-full focus:translate-y-0 transition-transform;
 }
+
+/* Large Text Mode */
+.large-text {
+  font-size: 18px;
+}
+
+.large-text h1 { font-size: 2.25rem; }
+.large-text h2 { font-size: 1.875rem; }
+.large-text h3 { font-size: 1.5rem; }
