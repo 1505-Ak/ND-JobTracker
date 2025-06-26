@@ -124,7 +124,7 @@ We welcome contributions that improve accessibility and user experience! Please:
 
 ## 🐛 Bug Reports & Feature Requests
 
-Please use the [GitHub Issues](https://github.com/your-username/job-tracker/issues) page to report bugs or request features. When reporting bugs, please include:
+Please use the [GitHub Issues](https://github.com/1505-Ak/job-tracker/issues) page to report bugs or request features. When reporting bugs, please include:
 
 - Browser and version
 - Steps to reproduce
@@ -138,9 +138,7 @@ Please use the [GitHub Issues](https://github.com/your-username/job-tracker/issu
 - **Safari** 14+
 - **Edge** 90+
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
