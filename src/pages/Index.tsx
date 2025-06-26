@@ -165,8 +165,8 @@ const Index = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              NeuroTrack
+            <h1 className="text-4xl sm:text-5xl font-extrabold mb-2 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-transparent bg-clip-text select-none">
+              Employed
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
               Track your applications with kindness and clarity. Every step forward is progress worth celebrating!

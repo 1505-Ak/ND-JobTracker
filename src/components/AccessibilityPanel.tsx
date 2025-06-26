@@ -74,7 +74,7 @@ export const AccessibilityPanel = ({
         </Button>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 max-h-[70vh] overflow-y-auto">
         {/* High Contrast Mode */}
         <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
           <div className="flex items-start gap-3">
