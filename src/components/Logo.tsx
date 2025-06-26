@@ -1,8 +1,8 @@
 const Logo = () => (
   <svg
-    width="180"
-    height="50"
-    viewBox="0 0 180 50"
+    width="200"
+    height="60"
+    viewBox="0 0 200 60"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-label="Employed logo"
@@ -17,10 +17,11 @@ const Logo = () => (
     </defs>
     <text
       x="0"
-      y="38"
+      y="45"
       fontFamily="'Poppins', sans-serif"
       fontWeight="800"
-      fontSize="40"
+      fontSize="42"
+      letterSpacing="1px"
       fill="url(#grad)"
     >
       Employed
