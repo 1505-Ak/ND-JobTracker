@@ -122,15 +122,6 @@ We welcome contributions that improve accessibility and user experience! Please:
 - Add appropriate ARIA labels
 - Test with screen readers when possible
 
-## 🐛 Bug Reports & Feature Requests
-
-Please use the [GitHub Issues](https://github.com/1505-Ak/job-tracker/issues) page to report bugs or request features. When reporting bugs, please include:
-
-- Browser and version
-- Steps to reproduce
-- Expected vs actual behavior
-- Screenshots if applicable
-
 ## 📱 Browser Support
 
 - **Chrome** 90+
