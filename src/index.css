@@ -221,3 +221,9 @@ select:invalid:focus {
 .large-text h1 { font-size: 2.25rem; }
 .large-text h2 { font-size: 1.875rem; }
 .large-text h3 { font-size: 1.5rem; }
+
+/* Dark mode text tweaks */
+.dark .text-gray-600 { @apply text-gray-400; }
+.dark .text-gray-500 { @apply text-gray-400; }
+.dark .text-gray-700 { @apply text-gray-300; }
+.dark .text-gray-900 { @apply text-gray-100; }

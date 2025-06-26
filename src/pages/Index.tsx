@@ -166,7 +166,7 @@ const Index = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              NeuroJob Navigator
+              NeuroTrack
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
               Track your applications with kindness and clarity. Every step forward is progress worth celebrating!
