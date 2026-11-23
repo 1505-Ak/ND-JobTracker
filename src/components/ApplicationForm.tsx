@@ -190,6 +190,7 @@ export const ApplicationForm = ({ onSubmit, onClose }: ApplicationFormProps) => 
                 <Input
                   id="dateApplied"
                   type="date"
+                  required
                   value={formData.dateApplied}
                   onChange={(e) => handleInputChange('dateApplied', e.target.value)}
                   className="focus:ring-2 focus:ring-blue-500"

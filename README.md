@@ -2,6 +2,8 @@
 
 A **kindness-first** web application designed to help neurodivergent job-seekers plan, track, and celebrate their job-search journey with accessibility and usability at its core.
 
+Applications and status updates are saved in the browser and survive reloads. Each browser profile and site address has its own data. Use **Export CSV** to keep a copy before clearing site data or switching devices.
+
 ![Job Tracker Demo](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
 ![React](https://img.shields.io/badge/React-18.x-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)

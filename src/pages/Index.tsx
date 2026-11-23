@@ -19,6 +19,7 @@ import { AccessibilityPanel } from '@/components/AccessibilityPanel';
 import { JobOpenings } from '@/components/JobOpenings';
 import { useToast } from '@/hooks/use-toast';
 import Logo from '@/components/Logo';
+import { applicationStorageKey, loadApplications, saveApplications } from '@/lib/application-storage';
 
 export interface JobApplication {
   id: string;
@@ -34,6 +35,7 @@ export interface JobApplication {
 
 const Index = () => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
+  const [storageError, setStorageError] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -50,16 +52,34 @@ const Index = () => {
 
   const { toast } = useToast();
 
+  useEffect(() => {
+    const refreshApplications = () => {
+      try {
+        setApplications(loadApplications());
+        setStorageError('');
+      } catch {
+        setStorageError('Saved applications could not be loaded. Check that browser storage is available.');
+      }
+    };
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === applicationStorageKey || event.key === null) refreshApplications();
+    };
+
+    refreshApplications();
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
   // Load settings from localStorage
   useEffect(() => {
-    const savedContrast = localStorage.getItem('highContrast') === 'true';
-    const savedDyslexia = localStorage.getItem('dyslexiaMode') === 'true';
-    const savedDark = localStorage.getItem('darkMode') === 'true';
-    const savedLarge = localStorage.getItem('largeText') === 'true';
-    setHighContrast(savedContrast);
-    setDyslexiaMode(savedDyslexia);
-    setDarkMode(savedDark);
-    setLargeText(savedLarge);
+    try {
+      setHighContrast(localStorage.getItem('highContrast') === 'true');
+      setDyslexiaMode(localStorage.getItem('dyslexiaMode') === 'true');
+      setDarkMode(localStorage.getItem('darkMode') === 'true');
+      setLargeText(localStorage.getItem('largeText') === 'true');
+    } catch {
+      // Keep default settings when browser storage is unavailable.
+    }
   }, []);
 
   // Apply accessibility classes to body
@@ -73,23 +93,39 @@ const Index = () => {
 
   // gentle deadline reminder
   useEffect(() => {
-    const soon = applications.filter(
-      (a) => a.deadline && (new Date(a.deadline).getTime() - Date.now()) / 86400000 <= 1,
-    );
+    const now = Date.now();
+    const soon = applications.filter((application) => {
+      if (!application.deadline) return false;
+      const remaining = application.deadline.getTime() - now;
+      return remaining >= 0 && remaining <= 86400000;
+    });
     if (soon.length) {
       toast({ title: '⏰ Heads-up!', description: `You have ${soon.length} deadline(s) within 24h.` });
     }
   }, [applications, toast]);
 
+  const persistApplications = (change: (current: JobApplication[]) => JobApplication[]) => {
+    try {
+      const updated = change(loadApplications());
+      saveApplications(updated);
+      setApplications(updated);
+      setStorageError('');
+      return true;
+    } catch {
+      setStorageError('Changes could not be saved. Check that browser storage is available and has space.');
+      return false;
+    }
+  };
+
   const addApplication = (app: Omit<JobApplication, 'id'>) => {
     const newApp: JobApplication = { ...app, id: crypto.randomUUID() };
-    setApplications((prev) => [...prev, newApp]);
+    if (!persistApplications((current) => [...current, newApp])) return;
     setShowForm(false);
     toast({ title: 'Great job! 🎉', description: 'Your application has been added.' });
   };
 
   const updateApplication = (id: string, updates: Partial<JobApplication>) => {
-    setApplications((prev) => prev.map((app) => (app.id === id ? { ...app, ...updates } : app)));
+    persistApplications((current) => current.map((app) => (app.id === id ? { ...app, ...updates } : app)));
   };
 
   const getStatusColor = (status: string) => {
@@ -210,6 +246,12 @@ const Index = () => {
             </Button>
           </div>
         </div>
+
+        {storageError && (
+          <p role="alert" className="fixed inset-x-4 top-4 z-[60] mx-auto max-w-xl rounded border border-red-300 bg-red-50 p-3 text-red-900">
+            {storageError}
+          </p>
+        )}
 
         {/* Utility bar */}
         <div className="flex flex-wrap gap-2 my-4 items-center">
