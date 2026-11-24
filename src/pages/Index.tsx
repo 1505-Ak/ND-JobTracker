@@ -149,10 +149,17 @@ const Index = () => {
     return colors[priority] || colors.medium;
   };
 
+  const clearFilters = () => {
+    setSearch('');
+    setStatusFilter('all');
+    setPriorityFilter('all');
+  };
+
   // filters + sorting
+  const query = search.trim().toLowerCase();
   const filtered = applications.filter((app) => {
-    const txt = (app.company + app.position).toLowerCase();
-    const matchesSearch = txt.includes(search.toLowerCase());
+    const txt = `${app.company} ${app.position}`.toLowerCase();
+    const matchesSearch = txt.includes(query);
     const matchesStatus = statusFilter === 'all' || app.status === statusFilter;
     const matchesPriority = priorityFilter === 'all' || app.priority === priorityFilter;
     return matchesSearch && matchesStatus && matchesPriority;
@@ -261,12 +268,14 @@ const Index = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search company / position"
+              aria-label="Search company or position"
               className="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <select
             value={statusFilter}
+            aria-label="Filter by status"
             onChange={(e) => setStatusFilter(e.target.value as any)}
             className="px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500"
           >
@@ -281,6 +290,7 @@ const Index = () => {
 
           <select
             value={priorityFilter}
+            aria-label="Filter by priority"
             onChange={(e) => setPriorityFilter(e.target.value as any)}
             className="px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500"
           >
@@ -383,6 +393,11 @@ const Index = () => {
                 >
                   <Plus className="h-4 w-4 mr-2" /> Add Your First Application
                 </Button>
+              </div>
+            ) : sortedApplications.length === 0 ? (
+              <div className="space-y-3 py-8 text-center">
+                <p role="status" className="text-gray-700">No applications match your search and filters.</p>
+                <Button variant="outline" onClick={clearFilters}>Clear filters</Button>
               </div>
             ) : (
               <div className="space-y-4">
