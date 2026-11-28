@@ -1,3 +1,4 @@
+import { applicationDateKey, formatApplicationDate, localDateKey } from '@/lib/application-dates';
 import { useState } from 'react';
 import { X, Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -34,14 +35,14 @@ export const ApplicationCalendar = ({ applications, onClose }: ApplicationCalend
   };
 
   const getApplicationsForDate = (day: number) => {
-    const targetDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const targetDate = localDateKey(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
     return applications.filter((app) => {
       const appDate = new Date(app.dateApplied);
       const deadlineDate = app.deadline ? new Date(app.deadline) : null;
 
       return (
-        appDate.toDateString() === targetDate.toDateString() ||
-        (deadlineDate && deadlineDate.toDateString() === targetDate.toDateString())
+        applicationDateKey(appDate) === targetDate ||
+        (deadlineDate && applicationDateKey(deadlineDate) === targetDate)
       );
     });
   };
@@ -157,8 +158,8 @@ export const ApplicationCalendar = ({ applications, onClose }: ApplicationCalend
                     {dayApplications.slice(0, 2).map((app, appIndex) => {
                       const isDeadline =
                         app.deadline &&
-                        new Date(app.deadline).toDateString() ===
-                          new Date(currentDate.getFullYear(), currentDate.getMonth(), day).toDateString();
+                        applicationDateKey(app.deadline) ===
+                          localDateKey(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
 
                       return (
                         <div
@@ -209,7 +210,7 @@ export const ApplicationCalendar = ({ applications, onClose }: ApplicationCalend
               <h3 className="font-medium text-gray-900 mb-3">Upcoming Deadlines &amp; Actions</h3>
               <div className="space-y-2 max-h-32 overflow-y-auto">
                 {applications
-                  .filter((app) => app.deadline && new Date(app.deadline) >= new Date())
+                  .filter((app) => app.deadline && applicationDateKey(app.deadline) >= localDateKey(today))
                   .sort((a, b) => new Date(a.deadline!).getTime() - new Date(b.deadline!).getTime())
                   .slice(0, 5)
                   .map((app) => (
@@ -222,7 +223,7 @@ export const ApplicationCalendar = ({ applications, onClose }: ApplicationCalend
                         <span className="text-gray-600 ml-2">- {app.position}</span>
                       </div>
                       <Badge variant="outline" className="text-xs">
-                        {app.deadline?.toLocaleDateString()}
+                        {app.deadline && formatApplicationDate(app.deadline)}
                       </Badge>
                     </div>
                   ))}

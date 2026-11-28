@@ -1,3 +1,4 @@
+import { localDateKey } from '@/lib/application-dates';
 import { useState } from 'react';
 import { X, Calendar as CalendarIcon, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,7 @@ export const ApplicationForm = ({ onSubmit, onClose }: ApplicationFormProps) => 
     company: '',
     position: '',
     status: 'applied' as const,
-    dateApplied: new Date().toISOString().split('T')[0],
+    dateApplied: localDateKey(new Date()),
     nextAction: '',
     deadline: '',
     notes: '',

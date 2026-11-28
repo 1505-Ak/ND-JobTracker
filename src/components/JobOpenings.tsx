@@ -1,3 +1,4 @@
+import { localDateKey } from '@/lib/application-dates';
 import { useEffect, useState, useMemo } from 'react';
 import { X, Search as SearchIcon, ExternalLink, RefreshCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -352,7 +353,7 @@ export const JobOpenings = ({ onAdd, onClose }: JobOpeningsProps) => {
                               company: job.company_name,
                               position: job.title,
                               status: 'pending',
-                              dateApplied: new Date(),
+                              dateApplied: new Date(localDateKey(new Date())),
                               nextAction: '',
                               deadline: undefined,
                               notes: job.url,

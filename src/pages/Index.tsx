@@ -1,3 +1,4 @@
+import { applicationDateKey, formatApplicationDate, localDateKey } from '@/lib/application-dates';
 import { useEffect, useState } from 'react';
 import {
   Plus,
@@ -93,14 +94,16 @@ const Index = () => {
 
   // gentle deadline reminder
   useEffect(() => {
-    const now = Date.now();
+    const now = new Date();
+    const today = localDateKey(now);
+    const tomorrow = localDateKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1));
     const soon = applications.filter((application) => {
       if (!application.deadline) return false;
-      const remaining = application.deadline.getTime() - now;
-      return remaining >= 0 && remaining <= 86400000;
+      const day = applicationDateKey(application.deadline);
+      return day >= today && day <= tomorrow;
     });
     if (soon.length) {
-      toast({ title: '⏰ Heads-up!', description: `You have ${soon.length} deadline(s) within 24h.` });
+      toast({ title: '⏰ Heads-up!', description: `Deadlines today or tomorrow: ${soon.length}.` });
     }
   }, [applications, toast]);
 
@@ -178,8 +181,8 @@ const Index = () => {
       a.company,
       a.position,
       a.status,
-      a.dateApplied.toISOString().split('T')[0],
-      a.deadline ? a.deadline.toISOString().split('T')[0] : '',
+      applicationDateKey(a.dateApplied),
+      a.deadline ? applicationDateKey(a.deadline) : '',
       a.nextAction,
       a.priority,
       a.notes.replace(/\n/g, ' '),
@@ -411,8 +414,8 @@ const Index = () => {
                           <p className="text-gray-600 mb-2 font-medium">{app.company}</p>
 
                           <div className="space-y-1 text-sm text-gray-500">
-                            <p>Applied: {app.dateApplied.toLocaleDateString()}</p>
-                            {app.deadline && <p>Deadline: {app.deadline.toLocaleDateString()}</p>}
+                            <p>Applied: {formatApplicationDate(app.dateApplied)}</p>
+                            {app.deadline && <p>Deadline: {formatApplicationDate(app.deadline)}</p>}
                             {app.nextAction && <p className="font-medium text-blue-600">Next: {app.nextAction}</p>}
                           </div>
 
